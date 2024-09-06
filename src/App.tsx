@@ -10,8 +10,8 @@ const MyComponent: React.FC = () => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const lettersRef = useRef<LetterRef[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const flipState = useRef<boolean>(false); // Track the flip state (false = not flipped, true = flipped)
-  const currentLetterIndex = useRef<number>(0); // Track the index of the current letter that the SVG crosses
+  const flipState = useRef<boolean>(false); 
+  const currentLetterIndex = useRef<number>(0);
 
   useEffect(() => {
     const svgElement = svgRef.current;
@@ -21,7 +21,7 @@ const MyComponent: React.FC = () => {
 
     const containerWidth = container.offsetWidth;
     const svgWidth = svgElement.getBoundingClientRect().width;
-    const margin = 20; // Add some margin to the right-most point
+    const margin = 20; 
 
     // Animate the SVG element
     const animation = gsap.to(svgElement, {
@@ -52,7 +52,6 @@ const MyComponent: React.FC = () => {
         }
       },
       onUpdate: () => {
-        // Handle letter disappearance and reappearance based on SVG position
         const svgRect = svgElement.getBoundingClientRect();
         lettersRef.current.forEach((letter, index) => {
           if (letter) {
@@ -63,15 +62,13 @@ const MyComponent: React.FC = () => {
             const letterRight = letterRect.right;
 
             if (!flipState.current) {
-              // When the SVG is moving forward, make letters disappear as the SVG crosses them
               if (svgRight > letterLeft && svgLeft < letterRight) {
-                currentLetterIndex.current = index; // Track the current letter index
+                currentLetterIndex.current = index; 
                 gsap.to(letter, { opacity: 0, duration: 0.2 });
               }
             } else {
-              // When the SVG is moving backward, make letters reappear with a delay
+
               if (svgRight > letterLeft && svgLeft < letterRight) {
-                // Apply delay when the SVG is returning and crossing the letter
                 gsap.to(letter, { opacity: 1, duration: 0.2, delay: 0.5 });
               }
             }
